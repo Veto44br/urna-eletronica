@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Urna eletrônica acessível">
+  <title>Votação Eletrônica - Urna</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🗳️ VOTAÇÃO ELETRÔNICA</div>
+    <button id="fontBtn" class="accessibility-btn" type="button" aria-label="Aumentar tamanho do texto">A+</button>
+  </header>
+
+  <main class="urna-layout">
+    <section class="card voting-card" aria-labelledby="tituloVoto">
+      <div class="step" id="contador">VOTO 1 DE 2</div>
+      <h1 id="tituloVoto">Primeiro voto</h1>
+      <p class="subtitle">Selecione um candidato.</p>
+
+      <div id="candidatos" class="candidate-grid" role="group" aria-label="Candidatos"></div>
+
+      <div id="selecionado" class="selected-box" aria-live="polite">
+        Nenhum candidato selecionado.
+      </div>
+
+      <div class="actions">
+        <button id="confirmarBtn" class="primary-btn" type="button" disabled>CONFIRMAR VOTO</button>
+      </div>
+
+      <div id="mensagem" class="message" role="alert" aria-live="polite"></div>
+    </section>
+
+    <aside class="card results-card" aria-labelledby="resultadoTitulo">
+      <div class="step">RESULTADO</div>
+      <h2 id="resultadoTitulo">Porcentagem dos votos</h2>
+      <p class="subtitle">Os resultados são atualizados após cada voto.</p>
+      <div id="resultados" class="results" aria-live="polite"></div>
+    </aside>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/urna.js"></script>
+</body>
+</html>

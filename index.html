@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de votação eletrônica acessível e responsivo">
+  <title>Votação Eletrônica - Identificação</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">VOTAÇÃO ELETRÔNICA</div>
+    <button id="fontBtn" class="accessibility-btn" type="button" aria-label="Aumentar tamanho do texto">A+</button>
+  </header>
+
+  <main class="page">
+    <section class="card" aria-labelledby="titulo">
+      <div class="step">ETAPA 1 DE 3</div>
+      <h1 id="titulo">Identificação do eleitor</h1>
+      <p class="subtitle">Informe seus dados para iniciar a votação.</p>
+
+      <form id="identificacaoForm" novalidate>
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" type="text" autocomplete="name"
+                 placeholder="Digite seu nome" required>
+        </div>
+
+        <div class="field">
+          <label for="documento">Documento</label>
+          <input id="documento" name="documento" type="text"
+                 inputmode="numeric" autocomplete="off"
+                 placeholder="Digite seu CPF" maxlength="14" required>
+        </div>
+
+        <div id="mensagem" class="message" role="alert" aria-live="polite"></div>
+
+        <button class="primary-btn" type="submit">CONTINUAR →</button>
+      </form>
+
+      <div class="accessibility-note">
+        <strong>♿ Acessibilidade:</strong> use a tecla <kbd>Tab</kbd> para navegar pelos campos e botões.
+      </div>
+    </section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/identificacao.js"></script>
+</body>
+</html>
