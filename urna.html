@@ -3,39 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Urna eletrônica acessível">
+  <meta name="description" content="Urna eletrônica acessível e responsiva">
   <title>Votação Eletrônica - Urna</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="topbar">
     <div class="brand">🗳️ VOTAÇÃO ELETRÔNICA</div>
-    <button id="fontBtn" class="accessibility-btn" type="button" aria-label="Aumentar tamanho do texto">A+</button>
+    <button id="fontBtn" class="accessibility-btn" type="button"
+            aria-label="Aumentar tamanho do texto">A+</button>
   </header>
 
   <main class="urna-layout">
     <section class="card voting-card" aria-labelledby="tituloVoto">
+
       <div class="step" id="contador">VOTO 1 DE 2</div>
       <h1 id="tituloVoto">Primeiro voto</h1>
-      <p class="subtitle">Selecione um candidato.</p>
+      <p class="subtitle">
+        Digite no teclado o número do candidato.
+      </p>
 
-      <div id="candidatos" class="candidate-grid" role="group" aria-label="Candidatos"></div>
-
-      <div id="selecionado" class="selected-box" aria-live="polite">
-        Nenhum candidato selecionado.
+      <div class="urna-screen" aria-label="Tela da urna">
+        <span class="screen-label">NÚMERO DO CANDIDATO</span>
+        <output id="numeroDigitado" class="typed-number"
+                aria-live="polite">__</output>
       </div>
 
-      <div class="actions">
-        <button id="confirmarBtn" class="primary-btn" type="button" disabled>CONFIRMAR VOTO</button>
+      <div class="candidate-preview" id="candidatePreview"
+           aria-live="polite" aria-atomic="true" hidden>
+        <img id="candidatePhoto" src="" alt="">
+        <div class="candidate-info">
+          <span class="candidate-number" id="candidateNumber"></span>
+          <span class="candidate-name-large" id="candidateName"></span>
+        </div>
+      </div>
+
+      <div class="keypad" role="group" aria-label="Teclado numérico da urna">
+        <button class="key" type="button" data-digit="1" aria-label="Número 1">1</button>
+        <button class="key" type="button" data-digit="2" aria-label="Número 2">2</button>
+        <button class="key" type="button" data-digit="3" aria-label="Número 3">3</button>
+
+        <button class="key" type="button" data-digit="4" aria-label="Número 4">4</button>
+        <button class="key" type="button" data-digit="5" aria-label="Número 5">5</button>
+        <button class="key" type="button" data-digit="6" aria-label="Número 6">6</button>
+
+        <button class="key" type="button" data-digit="7" aria-label="Número 7">7</button>
+        <button class="key" type="button" data-digit="8" aria-label="Número 8">8</button>
+        <button class="key" type="button" data-digit="9" aria-label="Número 9">9</button>
+
+        <span aria-hidden="true"></span>
+        <button class="key" type="button" data-digit="0" aria-label="Número 0">0</button>
+        <span aria-hidden="true"></span>
+      </div>
+
+      <div class="actions urna-actions">
+        <button id="corrigirBtn" class="correct-btn" type="button">
+          CORRIGE
+        </button>
+        <button id="confirmarBtn" class="confirm-btn" type="button" disabled>
+          CONFIRMA
+        </button>
+      </div>
+
+      <div id="selecionado" class="selected-box" aria-live="polite">
+        Digite dois números para identificar o candidato.
       </div>
 
       <div id="mensagem" class="message" role="alert" aria-live="polite"></div>
+
+      <p class="accessibility-note">
+        <strong>Acessibilidade:</strong> use <kbd>Tab</kbd> para navegar.
+        Cada tecla emite um sinal sonoro de confirmação.
+      </p>
     </section>
 
     <aside class="card results-card" aria-labelledby="resultadoTitulo">
       <div class="step">RESULTADO</div>
       <h2 id="resultadoTitulo">Porcentagem dos votos</h2>
-      <p class="subtitle">Os resultados são atualizados após cada voto.</p>
+      <p class="subtitle">
+        Os resultados são atualizados após cada voto.
+      </p>
       <div id="resultados" class="results" aria-live="polite"></div>
     </aside>
   </main>

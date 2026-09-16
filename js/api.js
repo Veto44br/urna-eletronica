@@ -1,70 +1,73 @@
-/*
-  API LOCAL (simulada)
-  Como o projeto será executado somente pelo Live Server, não existe um
-  servidor Node/Express rodando. Por isso, este arquivo simula uma API REST
-  usando localStorage, mantendo os dados entre as páginas.
-
-  Se o professor exigir uma API HTTP real, este módulo pode ser substituído
-  posteriormente por fetch() para um backend.
-*/
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxjuEQuCK075kGGrY4H9HMKEOv085i_TdyDoABxV9MM9oxlfmweb0RQ1h8GebUOO4DYbw/exec";
 
 const API = {
+
+  // Candidatos fictícios criados por IA para a demonstração escolar.
   candidatos: [
-    { numero: "10", nome: "Candidato 10" },
-    { numero: "20", nome: "Candidato 20" },
-    { numero: "30", nome: "Candidato 30" },
-    { numero: "40", nome: "Candidato 40" }
+    {
+      numero: "10",
+      nome: "Gabriel Almeida",
+      foto: "img/candidato-10.jpg"
+    },
+    {
+      numero: "20",
+      nome: "Larissa Fernandes",
+      foto: "img/candidato-20.jpg"
+    },
+    {
+      numero: "30",
+      nome: "Matheus Costa",
+      foto: "img/candidato-30.jpg"
+    },
+    {
+      numero: "40",
+      nome: "Beatriz Lima",
+      foto: "img/candidato-40.jpg"
+    }
   ],
 
-  obterEleitores() {
-    return JSON.parse(localStorage.getItem("eleitores") || "[]");
+  async cadastrarEleitor(nome, documento) {
+    const url =
+      API_URL +
+      "?action=cadastrar" +
+      "&nome=" + encodeURIComponent(nome) +
+      "&documento=" + encodeURIComponent(documento) +
+      "&_=" + Date.now();
+
+    const resposta = await fetch(url);
+    return await resposta.json();
   },
 
-  cadastrarEleitor(nome, documento) {
-    const eleitores = this.obterEleitores();
-    const existente = eleitores.find(e => e.documento === documento);
+  async registrarVotos(documento, voto1, voto2) {
+    const url =
+      API_URL +
+      "?action=votar" +
+      "&documento=" + encodeURIComponent(documento) +
+      "&voto1=" + encodeURIComponent(voto1) +
+      "&voto2=" + encodeURIComponent(voto2) +
+      "&_=" + Date.now();
 
-    if (existente) return { sucesso: true, eleitor: existente, existente: true };
-
-    const eleitor = {
-      id: Date.now().toString(),
-      nome,
-      documento,
-      criadoEm: new Date().toISOString()
-    };
-
-    eleitores.push(eleitor);
-    localStorage.setItem("eleitores", JSON.stringify(eleitores));
-    return { sucesso: true, eleitor, existente: false };
+    const resposta = await fetch(url);
+    return await resposta.json();
   },
 
-  obterVotos() {
-    return JSON.parse(localStorage.getItem("votos") || '{"10":0,"20":0,"30":0,"40":0}');
+  async obterResultados() {
+    const resposta = await fetch(
+      API_URL + "?action=resultados&_=" + Date.now()
+    );
+    return await resposta.json();
   },
 
-  registrarVoto(numero) {
-    const votos = this.obterVotos();
-    if (!(numero in votos)) return false;
-    votos[numero]++;
-    localStorage.setItem("votos", JSON.stringify(votos));
-    return true;
-  },
-
-  obterResultados() {
-    const votos = this.obterVotos();
-    const total = Object.values(votos).reduce((a, b) => a + b, 0);
-
-    return this.candidatos.map(c => ({
-      ...c,
-      votos: votos[c.numero],
-      porcentagem: total ? (votos[c.numero] / total) * 100 : 0
-    }));
-  },
-
-  limparDados() {
-    localStorage.removeItem("eleitores");
-    localStorage.removeItem("votos");
-    localStorage.removeItem("eleitorAtual");
-    localStorage.removeItem("votoAtual");
+  async verificarEleitor(documento) {
+    const resposta = await fetch(
+      API_URL +
+      "?action=verificar" +
+      "&documento=" +
+      encodeURIComponent(documento) +
+      "&_=" +
+      Date.now()
+    );
+    return await resposta.json();
   }
 };
